@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: linkding-deployment
+  name: linkding-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: linkding-deployment
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: linkding-deployment
+    spec:
+      containers:
+      - image: ghcr.io/sissbruecker/linkding:1.41.0-plus
+        name: linkding
+        ports:
+          - containerPort: 9090

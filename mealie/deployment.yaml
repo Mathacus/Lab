@@ -1,22 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: mealie
   labels:
     app: mealie
-  name: mealie
-  namespace: mealie
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - image: ghcr.io/mealie-recipes/mealie:v3.0.1
-        name: mealie
-        ports:
-          - containerPort: 9000
+  containers:
+    - image: ghcr.io/mealie-recipes/mealie:v3.0.1
+      name: mealie
+      ports:
+        - containerPort: 9000
+      volumeDevices:
+        - name: mealie-data
+          devicePath: /etc/data
+  volumes:
+    - name: mealie-data
+      persistentVolumeClaim:
+        claimName: mealie-data
